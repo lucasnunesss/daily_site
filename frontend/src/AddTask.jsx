@@ -134,14 +134,14 @@ function Tasks(){
       {tasks.tasks.map((data, index) => (
         <TaskFlow key={index}>
         
-             <span className='span-time'  onClick={e => refFuncText(data)}>{data.hora} </span>
+             <input className='span-time' readOnly="true"  onClick={e => refFuncText(data)}value={data.hora} />
               <span className='span-task' onClick={e => refFuncText(data)}>{data.task}</span>
         </TaskFlow>
       ))}
 
 {addInput ? (
             <>
-            {/* <input type="text" onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} /> */}
+          
             <Horarios onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
             <button onClick={e => {
               setInput(false)
