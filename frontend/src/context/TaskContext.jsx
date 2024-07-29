@@ -25,6 +25,9 @@ const reduce = (state, action) => {
           }]
         }
     }
+    case("UPDATE"):{
+      return {...state, tasks: state.tasks.map((data, index) => data.id === action.id ? {...data, task: (action.title === "" ? data.task : action.title), hora: (action.hora === "" ? data.hora : action.hora) } : data )}
+    }
     default:
       return state;
   }
@@ -53,7 +56,18 @@ const useTask = () => {
     })
   }
 
-  return {tasks, addTask }
+
+  const editTask = (task, newTitle) => {
+    console.log(task)
+    dispatch({
+      type: "UPDATE",
+      id: task,
+      title: newTitle.tarefa,
+      hora: newTitle.hora
+    })
+
+  }
+  return {tasks, addTask, editTask }
 }
 
 export {TaskContextProvider, useTask}

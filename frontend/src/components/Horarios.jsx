@@ -28,7 +28,7 @@ const SelectElement = styled.select`
 const Horarios = ({onChange, selectTime}) => {
   return (
     <>
-            <h1>Compromissos </h1>
+            
             <InputElement onChange={onChange} type="text" name='compromisso'/>
             <SelectElement name="hora" id="" onChange={selectTime}>
             <option value="00:00">00:00</option>

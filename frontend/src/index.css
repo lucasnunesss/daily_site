@@ -34,3 +34,7 @@
   font-weight: 400;
   padding: 30px;
 }
+
+.span-task, .span-time{
+  cursor: pointer;
+}

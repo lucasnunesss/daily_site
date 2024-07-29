@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { redirect, useNavigate } from "react-router-dom";
 import './App.css'
 import Load from './Load'
@@ -92,18 +92,22 @@ function AddTask() {
   console.log("tasks", tasks)
   return (
     <>
+    
         <form onSubmit={funcBtn} >
+          
           <div className='formRoutine'>
-         
+       
             <IconElement className="bi bi-plus-lg"></IconElement>
+            <h1>Compromisso</h1>
             <Horarios onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
             <ButtonElement type='
             button' onClick={(e) => addTask(e,tarefas)} inputColor="transparent">Salvar</ ButtonElement>
           
          
             <Tasks />
-            <button type='submit'>Enviar</button>
+            
           </div>
+          <button type='submit'>Enviar</button>
         </form>
     
     </>
@@ -111,18 +115,44 @@ function AddTask() {
 }
 
 function Tasks(){
-  const {tasks} = useTask()
+  const {tasks,editTask} = useTask()
+  const [addInput, setInput] = useState(false)
+  const [addTime, setTime] = useState(false)
+  const [tarefas, setTarefas] = useState({tarefa: "", hora: ""})
+  const refTeste = useRef()
+  function refFuncText(e){
+    refTeste.current = e.id
+    setInput(true)
+    console.log(refTeste.current)
+  }
 
   return (
+    <>
+    
     <TasksDiv>
+      
       {tasks.tasks.map((data, index) => (
         <TaskFlow key={index}>
-             <span className='span-time'>{data.hora} </span>
-            <span className='span-task'>{data.task}</span>
-         
+        
+             <span className='span-time'  onClick={e => refFuncText(data)}>{data.hora} </span>
+              <span className='span-task' onClick={e => refFuncText(data)}>{data.task}</span>
         </TaskFlow>
       ))}
+
+{addInput ? (
+            <>
+            {/* <input type="text" onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} /> */}
+            <Horarios onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
+            <button onClick={e => {
+              setInput(false)
+              editTask(refTeste.current, tarefas)
+            }}>Send</button>
+            </>
+          ) : null}
+
+
     </TasksDiv>
+    </>
   )
 }
 
