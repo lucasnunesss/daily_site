@@ -116,42 +116,60 @@ function AddTask() {
 
 function Tasks(){
   const {tasks,editTask} = useTask()
-  const [addInput, setInput] = useState(false)
-  const [addTime, setTime] = useState(false)
+
+  const [editIndex, setEditIndex] = useState(null);
   const [tarefas, setTarefas] = useState({tarefa: "", hora: ""})
   const refTeste = useRef()
-  function refFuncText(e){
+  function refFuncText(e, index){
     refTeste.current = e.id
-    setInput(true)
+ 
+    setEditIndex(index)
+   
     console.log(refTeste.current)
   }
 
+  function handleSave(index) {
+    console.log(refTeste)
+    editTask(refTeste.current, index)
+    setEditIndex(null);
+  }
   return (
     <>
-    
-    <TasksDiv>
-      
+
+<TasksDiv>
       {tasks.tasks.map((data, index) => (
         <TaskFlow key={index}>
-        
-             <input className='span-time' readOnly="true"  onClick={e => refFuncText(data)}value={data.hora} />
-              <span className='span-task' onClick={e => refFuncText(data)}>{data.task}</span>
+          {editIndex === index ? (
+            <>
+              <Horarios
+                onChange={(e) => setTarefas({ ...tarefas, tarefa: e.target.value })}
+                selectTime={(e) => setTarefas({ ...tarefas, hora: e.target.value })}
+              />
+              <button onClick={(e) => handleSave(tarefas)}>Send</button>
+            </>
+          ) : (
+            <>
+              <input
+                className="span-time"
+                readOnly
+                value={data.hora}
+                onClick={() => refFuncText(data, index)}
+              />
+              <input
+                className="span-task"
+                readOnly
+                value={data.task}
+                onClick={() => refFuncText(data, index)}
+              
+                
+              />
+            </>
+          )}
         </TaskFlow>
       ))}
-
-{addInput ? (
-            <>
-          
-            <Horarios onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
-            <button onClick={e => {
-              setInput(false)
-              editTask(refTeste.current, tarefas)
-            }}>Send</button>
-            </>
-          ) : null}
-
-
     </TasksDiv>
+    
+  
     </>
   )
 }
