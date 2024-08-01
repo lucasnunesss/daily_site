@@ -25,12 +25,12 @@ const SelectElement = styled.select`
   font-size: 1.2em;
   height: 40px;
 `
-const Horarios = ({onChange, selectTime}) => {
+const Horarios = ({onChange, selectTime, value, valueTime}) => {
   return (
     <>
             
-            <InputElement onChange={onChange} type="text" name='compromisso'/>
-            <SelectElement name="hora" id="" onChange={selectTime}>
+            <InputElement onChange={onChange} type="text" name='compromisso'  defaultValue={value}/>
+            <SelectElement name="hora" id="" onChange={selectTime} defaultValue={valueTime}>
             <option value="00:00">00:00</option>
             <option value="01:00">01:00</option>
             <option value="02:00">02:00</option>

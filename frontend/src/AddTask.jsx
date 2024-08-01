@@ -144,20 +144,24 @@ function Tasks(){
               <Horarios
                 onChange={(e) => setTarefas({ ...tarefas, tarefa: e.target.value })}
                 selectTime={(e) => setTarefas({ ...tarefas, hora: e.target.value })}
+                value={data.task} valueTime={data.hora}
               />
               <button onClick={(e) => handleSave(tarefas)}>Send</button>
+              
             </>
           ) : (
             <>
               <input
                 className="span-time"
                 readOnly
+              
                 value={data.hora}
                 onClick={() => refFuncText(data, index)}
               />
               <input
                 className="span-task"
                 readOnly
+              
                 value={data.task}
                 onClick={() => refFuncText(data, index)}
               

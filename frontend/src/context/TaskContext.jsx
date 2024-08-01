@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useReducer } from "react";
 
@@ -43,6 +44,9 @@ const TaskContextProvider = ({children}) => {
     </TaskContext.Provider>
   )
 }
+
+
+
 const useTask = () => {
   const {tasks, dispatch} = useContext(TaskContext)
 
