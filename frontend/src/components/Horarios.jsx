@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components"
 
-const InputElement = styled.input`
+export const InputElement = styled.input`
   grid-column: 2;
+  grid-row: 2;
   background-color: transparent;
   color: white;
   border: none;
@@ -14,7 +15,7 @@ const InputElement = styled.input`
   outline: none;
 `
 
-const SelectElement = styled.select`
+export const SelectElement = styled.select`
   grid-column: 1;
   grid-row: 2;
   border: none;
@@ -25,12 +26,12 @@ const SelectElement = styled.select`
   font-size: 1.2em;
   height: 40px;
 `
-const Horarios = ({onChange, selectTime, value, valueTime}) => {
+const Horarios = ({onChange, selectTime,value, valueTime, read}) => {
   return (
     <>
-            
-            <InputElement onChange={onChange} type="text" name='compromisso'  defaultValue={value}/>
-            <SelectElement name="hora" id="" onChange={selectTime} defaultValue={valueTime}>
+          
+            <InputElement onChange={onChange} type="text" name='compromisso' defaultValue={value}  readOnly={read}/>
+            <SelectElement name="hora" id="" defaultValue={valueTime} onChange={selectTime} >
             <option value="00:00">00:00</option>
             <option value="01:00">01:00</option>
             <option value="02:00">02:00</option>

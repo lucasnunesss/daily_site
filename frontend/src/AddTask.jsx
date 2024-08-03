@@ -6,10 +6,10 @@ import Load from './Load'
 import styled from 'styled-components';
 import Horarios from './components/Horarios';
 import { TaskContextProvider, useTask } from './context/TaskContext';
-
+import { InputElement, SelectElement } from './components/Horarios';
 
 export const ButtonElement = styled.button`
-  
+  grid-row: 2;
   border: none;
   background-color: ${(props) => props.inputColor || "#BF4F74"};
   color: white;
@@ -53,11 +53,10 @@ const TaskFlow = styled.div`
   grid-template-columns: 100px 1fr;
   padding: 10px;
   margin: 10px;
-    font-weight: 700;
-    
-  .span-time{
-    grid-column: 1;
-  }
+  font-weight: 700;
+
+
+ 
 `
 
 function AddTask() {
@@ -99,15 +98,18 @@ function AddTask() {
        
             <IconElement className="bi bi-plus-lg"></IconElement>
             <h1>Compromisso</h1>
-            <Horarios onChange={e => setTarefas({...tarefas, tarefa: e.target.value})} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
+            <Horarios onChange={e => {setTarefas({...tarefas, tarefa: e.target.value})}} selectTime={e => setTarefas({...tarefas, hora: e.target.value})} />
             <ButtonElement type='
             button' onClick={(e) => addTask(e,tarefas)} inputColor="transparent">Salvar</ ButtonElement>
           
          
-            <Tasks />
+      
             
           </div>
-          <button type='submit'>Enviar</button>
+          <div>
+            <Tasks />
+            <button type='submit'>Enviar</button>
+          </div>
         </form>
     
     </>
@@ -120,55 +122,80 @@ function Tasks(){
   const [editIndex, setEditIndex] = useState(null);
   const [tarefas, setTarefas] = useState({tarefa: "", hora: ""})
   const refTeste = useRef()
+  const refTask = useRef()
+  const refHora = useRef()
   function refFuncText(e, index){
     refTeste.current = e.id
- 
+    console.log("tar", tarefas)
     setEditIndex(index)
    
-    console.log(refTeste.current)
+
   }
 
-  function handleSave(index) {
-    console.log(refTeste)
-    editTask(refTeste.current, index)
+  function handleSave() {
+    
+    editTask(refTeste.current, refTask.current, refHora.current)
     setEditIndex(null);
   }
+
+  function savesave(e){
+    console.log("aaaa", e.currentTarget.children.hora.value)
+    refTask.current = e.currentTarget.children.compromisso.value
+    refHora.current = e.currentTarget.children.hora.value
+    editTask(refTeste.current, refTask.current, refHora.current)
+  }
+
+  function save2(e){
+    console.log("me ajuda", e)
+    if (e === undefined) return console.log("maoi")
+    refHora.current = e
+  }
+
+  console.log("tarafaafsfas",tarefas)
   return (
     <>
 
 <TasksDiv>
       {tasks.tasks.map((data, index) => (
-        <TaskFlow key={index}>
+        <TaskFlow key={index} onClick={e => savesave(e)}>
+     
           {editIndex === index ? (
-            <>
+        
+        <>
               <Horarios
-                onChange={(e) => setTarefas({ ...tarefas, tarefa: e.target.value })}
-                selectTime={(e) => setTarefas({ ...tarefas, hora: e.target.value })}
+                onChange={(e) => {setTarefas({ ...tarefas, tarefa: e.target.value })}}
+                selectTime={(e) => {setTarefas({ ...tarefas, hora: e.target.value })}}
                 value={data.task} valueTime={data.hora}
               />
-              <button onClick={(e) => handleSave(tarefas)}>Send</button>
-              
-            </>
+
+              <ButtonElement onClick={(e) => handleSave()}  inputColor="transparent">Send</ButtonElement>
+              </>
+           
           ) : (
             <>
-              <input
+      
+      <input
                 className="span-time"
                 readOnly
               
                 value={data.hora}
-                onClick={() => refFuncText(data, index)}
+                onClick={(e) => refFuncText(data, index)}
               />
               <input
                 className="span-task"
                 readOnly
               
                 value={data.task}
-                onClick={() => refFuncText(data, index)}
+                onClick={(e) => refFuncText(data, index)}
               
                 
               />
+              
+            
+      
             </>
           )}
+           
         </TaskFlow>
       ))}
     </TasksDiv>

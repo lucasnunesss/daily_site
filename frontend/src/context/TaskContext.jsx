@@ -27,7 +27,8 @@ const reduce = (state, action) => {
         }
     }
     case("UPDATE"):{
-      return {...state, tasks: state.tasks.map((data, index) => data.id === action.id ? {...data, task: (action.title === "" ? data.task : action.title), hora: (action.hora === "" ? data.hora : action.hora) } : data )}
+      console.log("act",action.ind)
+      return {...state, tasks: state.tasks.map((data, index) => data.id === action.id ? {...data, task:  action.title === "" ? data.task : action.title, hora:  action.hora === "" ? data.hora : action.hora} : data)}
     }
     default:
       return state;
@@ -61,13 +62,13 @@ const useTask = () => {
   }
 
 
-  const editTask = (task, newTitle) => {
-    console.log(task)
+  const editTask = (task, newTitle, newHora) => {
     dispatch({
       type: "UPDATE",
       id: task,
-      title: newTitle.tarefa,
-      hora: newTitle.hora
+      title: newTitle,
+      hora: newHora,
+   
     })
 
   }
